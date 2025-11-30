@@ -1,4 +1,12 @@
-import Investment from '../models/Investment';
+import Investment from "../models/Investment";
 
-export const createInvestment = async (data: any) => Investment.create(data);
-export const getInvestments = async () => Investment.find().populate('business');
+// Keep repository very small — DB access only
+export const createInvestment = async (data: any) => {
+  return Investment.create(data);
+};
+
+export const getInvestments = async () => {
+  return Investment.find()
+    .populate("business")      // show business name/id
+    .lean();                   // return plain objects (faster)
+};

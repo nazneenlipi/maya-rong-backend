@@ -49,3 +49,24 @@ export const createInvestment = async (data: any) => {
 export const listInvestments = async () => {
   return InvestmentRepo.getInvestments();
 };
+
+export const getSummary = async () => {
+  const investments = await InvestmentRepo.getInvestments();
+
+  const monthly: Record<string, number> = {};
+
+  for (const inv of investments) {
+    const date = new Date(inv.date);
+    const month = date.toLocaleString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+
+    monthly[month] = (monthly[month] || 0) + (inv.amount ?? 0);
+  }
+
+  return Object.entries(monthly).map(([month, total]) => ({
+    month,
+    total,
+  }));
+};

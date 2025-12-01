@@ -27,3 +27,13 @@ export const getInvestments = async (_req: Request, res: Response) => {
     });
   }
 };
+
+export const getInvestmentsSummary = async (_req: Request, res: Response) => {
+  try {
+    const summary = await InvestmentService.getSummary();
+    return res.json(summary);
+  } catch (err: any) {
+    console.error("summary error:", err);
+    res.status(500).json({ message: err.message || "Failed to load summary" });
+  }
+};

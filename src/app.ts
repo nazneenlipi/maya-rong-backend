@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 
 import businessRoutes from "./routes/business.routes";
 import investmentRoutes from "./routes/investment.routes";
@@ -26,13 +25,5 @@ app.use("/api/v1/sales", saleRoutes);
 app.get("/", (req, res) => {
   res.send("Business Management API");
 });
-
-// Database connection
-// It's safe to connect here for Vercel (connection reuse). 
-// Ensure MONGO_URI is set in Vercel Environment Variables.
-mongoose
-  .connect(config.database_url!)
-  .then(() => console.log("Database connected"))
-  .catch((err) => console.error("Database connection error:", err));
 
 export default app;
